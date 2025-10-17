@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Compras registradas</title>
+</head>
+<body>
+    <h1>Lista de Compras</h1>
+    <ul>
+        {% for p in purchases %}
+            <li>
+                🛒 Compra ID: {{ p.id }} |
+                Usuario: {{ p.user_id }} |
+                Producto: {{ p.product_id }} |
+                Fecha: {{ p.timestamp }}
+            </li>
+        {% else %}
+            <li>No hay compras registradas.</li>
+        {% endfor %}
+    </ul>
+    <a href="/purchases/create">Registrar nueva compra</a>
+</body>
+</html>

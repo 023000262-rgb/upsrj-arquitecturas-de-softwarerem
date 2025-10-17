@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Compras de {{ user.name }}</title>
+</head>
+<body>
+    <h1>Usuario: {{ user.name }} (ID: {{ user.id }})</h1>
+    <h2>Productos Comprados:</h2>
+    <ul>
+        {% for p in purchased_products %}
+            <li>{{ p.name }} (ID: {{ p.id }})</li>
+        {% else %}
+            <li>No hay productos comprados.</li>
+        {% endfor %}
+    </ul>
+    <a href="/all">Volver</a>
+</body>
+</html>
