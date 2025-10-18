@@ -20,26 +20,23 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Configurar Python 3.12
-      uses: actions/setup-python@v4
+    - name: Configurar entorno con Dev Container
+      uses: devcontainers/ci@v0.3
       with:
-        python-version: 3.12
+        runCmd: echo "Entorno listo para evaluación"
 
-    - name: Instalar dependencias
-      run: |
-        python -m venv venv
-        source venv/bin/activate
-        pip install --upgrade pip
-        pip install -r requirements.txt
-
-    - name: Levantar microservicios
-      run: |
-        source venv/bin/activate
-        chmod +x ./src/run-all.sh
-        ./src/run-all.sh &
-        sleep 10  # espera a que los servicios levanten
+    - name: Ejecutar proyecto
+      uses: devcontainers/ci@v0.3
+      with:
+        runCmd: ./src/run-all.sh
 
     - name: Ejecutar pruebas unitarias
-      run: |
-        source venv/bin/activate
-        python tests/test_evaluation.py
+      uses: devcontainers/ci@v0.3
+      with:
+        runCmd: python tests/test_evaluation.py
+
+    - name: Ejecutar pruebas unitarias
+      uses: devcontainers/ci@v0.3
+      with:
+        runCmd: python tests/test_evaluation.py
+
