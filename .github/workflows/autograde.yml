@@ -25,13 +25,19 @@ jobs:
       with:
         runCmd: echo "Entorno listo para evaluación"
 
+    - name: Instalar dependencias
+      uses: devcontainers/ci@v0.3
+      with:
+        runCmd: |
+          pip install -r requirements.txt
+
     - name: Levantar microservicios y ejecutar proyecto
       uses: devcontainers/ci@v0.3
       with:
         runCmd: |
           chmod +x ./src/run-all.sh
           ./src/run-all.sh &
-          sleep 5  # espera a que los microservicios estén disponibles
+          sleep 5
 
     - name: Ejecutar pruebas unitarias
       uses: devcontainers/ci@v0.3
