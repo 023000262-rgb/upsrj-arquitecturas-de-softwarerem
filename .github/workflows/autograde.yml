@@ -25,11 +25,18 @@ jobs:
       with:
         runCmd: echo "Entorno listo para evaluación"
 
-    - name: Instalar dependencias
+    - name: Instalar dependencias de Python
       uses: devcontainers/ci@v0.3
       with:
         runCmd: |
-          pip install -r requirements.txt
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          elif [ -f src/requirements.txt ]; then
+            pip install -r src/requirements.txt
+          else
+            echo "⚠️ No se encontró requirements.txt, instalando dependencias básicas..."
+            pip install flask requests
+          fi
 
     - name: Levantar microservicios y ejecutar proyecto
       uses: devcontainers/ci@v0.3
@@ -37,7 +44,7 @@ jobs:
         runCmd: |
           chmod +x ./src/run-all.sh
           ./src/run-all.sh &
-          sleep 5
+          sleep 5  # espera a que los microservicios estén disponibles
 
     - name: Ejecutar pruebas unitarias
       uses: devcontainers/ci@v0.3
