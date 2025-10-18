@@ -23,6 +23,8 @@ jobs:
     - name: Configurar entorno con Dev Container
       uses: devcontainers/ci@v0.3
       with:
+        imageName: upsrj-devcontainer
+        push: false  
         runCmd: echo "Entorno listo para evaluación"
 
     - name: Instalar dependencias
