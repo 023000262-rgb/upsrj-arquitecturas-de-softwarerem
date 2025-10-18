@@ -15,34 +15,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clonar repositorio
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
+    - name: Clonar repositorio
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
 
-      - name: Configurar Dev Container
-        uses: devcontainers/ci@v0.3
-        with:
-          imageName: mcr.microsoft.com/devcontainers/python:3.12
-          runCmd: echo "Entorno listo para evaluación"
+    - name: Configurar Python 3.12
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.12
 
-      - name: Instalar dependencias de Python
-        uses: devcontainers/ci@v0.3
-        with:
-          imageName: mcr.microsoft.com/devcontainers/python:3.12
-          runCmd: pip install -r requirements.txt
+    - name: Instalar dependencias
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install --upgrade pip
+        pip install -r requirements.txt
 
-      - name: Levantar microservicios
-        uses: devcontainers/ci@v0.3
-        with:
-          imageName: mcr.microsoft.com/devcontainers/python:3.12
-          runCmd: |
-            chmod +x ./src/run-all.sh
-            ./src/run-all.sh &
-            sleep 10
+    - name: Levantar microservicios
+      run: |
+        source venv/bin/activate
+        chmod +x ./src/run-all.sh
+        ./src/run-all.sh &
+        sleep 10  # espera a que los servicios levanten
 
-      - name: Ejecutar pruebas unitarias
-        uses: devcontainers/ci@v0.3
-        with:
-          imageName: mcr.microsoft.com/devcontainers/python:3.12
-          runCmd: python tests/test_evaluation.py
+    - name: Ejecutar pruebas unitarias
+      run: |
+        source venv/bin/activate
+        python tests/test_evaluation.py
