@@ -25,6 +25,14 @@ jobs:
       with:
         runCmd: echo "Entorno listo para evaluación"
 
+    - name: Instalar dependencias
+      uses: devcontainers/ci@v0.3
+      with:
+        runCmd: |
+          python -m pip install --upgrade pip
+          pip install flask requests
+        push: false
+
     - name: Ejecutar proyecto
       uses: devcontainers/ci@v0.3
       with:
