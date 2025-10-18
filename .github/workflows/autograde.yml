@@ -23,8 +23,8 @@ jobs:
         uses: devcontainers/ci@v0.3
         with:
           imageName: upsrj-devcontainer
-          push: false
           runCmd: echo "Entorno listo para evaluación"
+
 
       - name: Ejecutar proyecto
         uses: devcontainers/ci@v0.3
@@ -35,3 +35,4 @@ jobs:
         uses: devcontainers/ci@v0.3
         with:
           runCmd: python tests/test_evaluation.py
+
