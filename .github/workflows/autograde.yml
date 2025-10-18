@@ -23,20 +23,12 @@ jobs:
     - name: Configurar entorno con Dev Container
       uses: devcontainers/ci@v0.3
       with:
-        imageName: upsrj-devcontainer
         runCmd: echo "Entorno listo para evaluación"
-
-    - name: Instalar dependencias
-      uses: devcontainers/ci@v0.3
-      with:
-        runCmd: |
-          python -m pip install --upgrade pip
-          pip install flask requests
 
     - name: Ejecutar proyecto
       uses: devcontainers/ci@v0.3
       with:
-        runCmd: python src/main.py
+        runCmd: ./src/run-all.sh
 
     - name: Ejecutar pruebas unitarias
       uses: devcontainers/ci@v0.3
