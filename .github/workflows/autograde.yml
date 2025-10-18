@@ -23,20 +23,29 @@ jobs:
     - name: Configurar entorno con Dev Container
       uses: devcontainers/ci@v0.3
       with:
+        image: mcr.microsoft.com/devcontainers/python:3.12
         runCmd: echo "Entorno listo para evaluación"
 
     - name: Instalar dependencias de Python
       uses: devcontainers/ci@v0.3
       with:
+        image: mcr.microsoft.com/devcontainers/python:3.12
         runCmd: pip install -r requirements.txt
 
     - name: Levantar microservicios y ejecutar proyecto
       uses: devcontainers/ci@v0.3
       with:
+        image: mcr.microsoft.com/devcontainers/python:3.12
         runCmd: |
           chmod +x ./src/run-all.sh
           ./src/run-all.sh &
           sleep 5
+
+    - name: Ejecutar pruebas unitarias
+      uses: devcontainers/ci@v0.3
+      with:
+        image: mcr.microsoft.com/devcontainers/python:3.12
+        runCmd: python tests/test_evaluation.py
 
     - name: Ejecutar pruebas unitarias
       uses: devcontainers/ci@v0.3
