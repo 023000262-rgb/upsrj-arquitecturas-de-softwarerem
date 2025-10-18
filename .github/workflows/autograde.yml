@@ -24,6 +24,7 @@ jobs:
       uses: devcontainers/ci@v0.3
       with:
         runCmd: echo "Entorno listo para evaluación"
+        push: false
 
     - name: Instalar dependencias
       uses: devcontainers/ci@v0.3
@@ -31,14 +32,16 @@ jobs:
         runCmd: |
           python -m pip install --upgrade pip
           pip install flask requests
+        push: false
 
     - name: Ejecutar proyecto
       uses: devcontainers/ci@v0.3
       with:
         runCmd: python src/main.py
+        push: false
 
     - name: Ejecutar pruebas unitarias
       uses: devcontainers/ci@v0.3
       with:
         runCmd: python tests/test_evaluation.py
-
+        push: false
