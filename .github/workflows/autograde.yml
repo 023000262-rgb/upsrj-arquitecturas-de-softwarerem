@@ -20,30 +20,23 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Configurar entorno con Dev Container
+      - name: Ejecutar pruebas en Dev Container
         uses: devcontainers/ci@v0.3
         with:
           imageName: mcr.microsoft.com/devcontainers/python:3.12
-          runCmd: echo "Entorno listo para evaluación"
-
-      - name: Instalar dependencias de Python
-        uses: devcontainers/ci@v0.3
-        with:
-          imageName: mcr.microsoft.com/devcontainers/python:3.12
-          runCmd: pip install -r requirements.txt
-
-      - name: Levantar microservicios
-        uses: devcontainers/ci@v0.3
-        with:
-          imageName: mcr.microsoft.com/devcontainers/python:3.12
+          subFolder: .devcontainer   # Ajusta si tu devcontainer.json está en otra carpeta
           runCmd: |
+            # Instalar dependencias
+            pip install --upgrade pip
+            pip install -r requirements.txt
+
+            # Levantar microservicios
             chmod +x ./src/run-all.sh
             ./src/run-all.sh &
-            sleep 5
 
-      - name: Ejecutar pruebas unitarias
-        uses: devcontainers/ci@v0.3
-        with:
-          imageName: mcr.microsoft.com/devcontainers/python:3.12
-          runCmd: python tests/test_evaluation.py
+            # Esperar a que los servicios estén activos
+            sleep 10
+
+            # Ejecutar tests unitarios
+            python tests/test_evaluation.py
 
