@@ -31,12 +31,17 @@ jobs:
         runCmd: |
           python -m pip install --upgrade pip
           pip install flask requests
-        push: false
 
     - name: Ejecutar proyecto
       uses: devcontainers/ci@v0.3
       with:
         runCmd: python src/main.py
+
+    - name: Ejecutar pruebas unitarias
+      uses: devcontainers/ci@v0.3
+      with:
+        runCmd: python tests/test_evaluation.py
+
 
     - name: Ejecutar pruebas unitarias
       uses: devcontainers/ci@v0.3
