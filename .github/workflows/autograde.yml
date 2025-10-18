@@ -13,26 +13,27 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Clonar repositorio
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
+    - name: Clonar repositorio
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
 
-      - name: Configurar entorno con Dev Container
-        uses: devcontainers/ci@v0.3
-        with:
-          imageName: upsrj-devcontainer
-          runCmd: echo "Entorno listo para evaluación"
+    - name: Configurar entorno con Dev Container
+      uses: devcontainers/ci@v0.3
+      with:
+        runCmd: echo "Entorno listo para evaluación"
 
+    - name: Levantar microservicios y ejecutar proyecto
+      uses: devcontainers/ci@v0.3
+      with:
+        runCmd: |
+          chmod +x ./src/run-all.sh
+          ./src/run-all.sh &
+          sleep 5  # espera a que los microservicios estén disponibles
 
-      - name: Ejecutar proyecto
-        uses: devcontainers/ci@v0.3
-        with:
-          runCmd: ./src/run-all.sh
-
-      - name: Ejecutar pruebas unitarias
-        uses: devcontainers/ci@v0.3
-        with:
-          runCmd: python tests/test_evaluation.py
-
+    - name: Ejecutar pruebas unitarias
+      uses: devcontainers/ci@v0.3
+      with:
+        runCmd: python tests/test_evaluation.py
