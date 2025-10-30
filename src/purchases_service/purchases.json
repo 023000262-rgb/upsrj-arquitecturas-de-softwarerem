@@ -160,5 +160,23 @@
         "user_id": 1,
         "product_id": 3,
         "timestamp": "2025-10-18T05:09:48.233262"
+    },
+    {
+        "id": 28,
+        "user_id": 1,
+        "product_id": 3,
+        "timestamp": "2025-10-30T18:29:42.067458"
+    },
+    {
+        "id": 29,
+        "user_id": 1,
+        "product_id": 3,
+        "timestamp": "2025-10-30T19:04:15.790799"
+    },
+    {
+        "id": 30,
+        "user_id": 1,
+        "product_id": 3,
+        "timestamp": "2025-10-30T20:20:36.303177"
     }
 ]
